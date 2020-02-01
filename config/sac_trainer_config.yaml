@@ -1,7 +1,7 @@
 default:
     trainer: sac
-    batch_size: 128
-    buffer_size: 50000
+    batch_size: 10 #128
+    buffer_size: 400 #50000
     buffer_init_steps: 0
     hidden_units: 128
     init_entcoef: 1.0

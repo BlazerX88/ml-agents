@@ -28,17 +28,19 @@ public class RollerAgent : Agent
 
     public override void CollectObservations()
     {
-        AddVectorObs(target.position);
-        AddVectorObs(transform.position);
-        AddVectorObs(rigidbody.velocity.x);
-        AddVectorObs(rigidbody.velocity.z);
+        AddVectorObs(target.position); // 3
+        AddVectorObs(transform.position); // + 3
+        AddVectorObs(rigidbody.velocity.x); // + 1
+        AddVectorObs(rigidbody.velocity.z); // + 1
+        // = 8 vector observations
     }
 
     public override void AgentAction(float[] vectorAction)
     {
         Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = vectorAction[0];
-        controlSignal.z = vectorAction[1];
+        controlSignal.x = vectorAction[0]; // 1
+        controlSignal.z = vectorAction[1]; // + 1
+        // = 2 vector actions
         rigidbody.AddForce(controlSignal * speed);
 
         float distanceToTarget = Vector3.Distance(this.transform.position, target.position);
@@ -50,8 +52,10 @@ public class RollerAgent : Agent
             Done();
         }
 
+        // fell off the floor
         if (this.transform.position.y < 0)
         {
+            SetReward(-0.125f);
             Done();
         }
     }
