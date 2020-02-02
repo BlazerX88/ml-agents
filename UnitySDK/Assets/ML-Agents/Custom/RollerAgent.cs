@@ -62,6 +62,6 @@ public class RollerAgent : Agent
 
     public override float[] Heuristic()
     {
-        return new float[] { Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical") };
+        return new float[] { Input.GetAxis("Horizontal"), Input.GetAxis("Vertical") };
     }
 }
