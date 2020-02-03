@@ -17,19 +17,19 @@ public class RollerAgent : Agent
     // Update is called once per frame
     public override void AgentReset()
     {
-        if (transform.position.y < 0f)
+        if (transform.localPosition.y < 0f)
         {
             rigidbody.angularVelocity = Vector3.zero;
             rigidbody.velocity = Vector3.zero;
-            transform.position = new Vector3(0f, FixedY, 0f);
+            transform.localPosition = new Vector3(0f, FixedY, 0f);
         }
-        transform.position = new Vector3(Random.value * 8 - 4, FixedY, Random.value * 8 - 4);
+        transform.localPosition = new Vector3(Random.value * 8 - 4, FixedY, Random.value * 8 - 4);
     }
 
     public override void CollectObservations()
     {
-        AddVectorObs(target.position); // 3
-        AddVectorObs(transform.position); // + 3
+        AddVectorObs(target.localPosition); // 3
+        AddVectorObs(transform.localPosition); // + 3
         AddVectorObs(rigidbody.velocity.x); // + 1
         AddVectorObs(rigidbody.velocity.z); // + 1
         // = 8 vector observations
@@ -43,7 +43,7 @@ public class RollerAgent : Agent
         // = 2 vector actions
         rigidbody.AddForce(controlSignal * speed);
 
-        float distanceToTarget = Vector3.Distance(this.transform.position, target.position);
+        float distanceToTarget = Vector3.Distance(this.transform.localPosition, target.localPosition);
 
         // Reached target
         if (distanceToTarget < 1.42f)
@@ -53,9 +53,9 @@ public class RollerAgent : Agent
         }
 
         // fell off the floor
-        if (this.transform.position.y < 0)
+        if (this.transform.localPosition.y < 0)
         {
-            SetReward(-0.125f);
+            // SetReward(-0.125f);
             Done();
         }
     }
