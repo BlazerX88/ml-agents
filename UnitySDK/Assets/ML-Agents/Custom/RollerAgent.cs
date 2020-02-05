@@ -17,6 +17,7 @@ public class RollerAgent : Agent
     // Update is called once per frame
     public override void AgentReset()
     {
+        // Make the momentum zero
         if (transform.localPosition.y < 0f)
         {
             rigidbody.angularVelocity = Vector3.zero;
@@ -30,16 +31,15 @@ public class RollerAgent : Agent
     {
         AddVectorObs(target.localPosition); // 3
         AddVectorObs(transform.localPosition); // + 3
-        AddVectorObs(rigidbody.velocity.x); // + 1
-        AddVectorObs(rigidbody.velocity.z); // + 1
+        AddVectorObs(Normalize(rigidbody.velocity.x, 0f, speed)); // + 1
+        AddVectorObs(Normalize(rigidbody.velocity.z, 0f, speed)); // + 1
         // = 8 vector observations
     }
 
     public override void AgentAction(float[] vectorAction)
     {
-        Vector3 controlSignal = Vector3.zero;
-        controlSignal.x = vectorAction[0]; // 1
-        controlSignal.z = vectorAction[1]; // + 1
+        var controlSignal = new Vector3(vectorAction[0], 0f, vectorAction[1]); // 1 + 1
+        print(controlSignal);
         // = 2 vector actions
         rigidbody.AddForce(controlSignal * speed);
 
@@ -48,20 +48,28 @@ public class RollerAgent : Agent
         // Reached target
         if (distanceToTarget < 1.42f)
         {
-            SetReward(1.0f);
+            // SetReward(0.1f);
+            SetReward(1f);
             Done();
         }
 
         // fell off the floor
         if (this.transform.localPosition.y < 0)
         {
-            // SetReward(-0.125f);
+            // SetReward(-1f);
             Done();
         }
+
+        // SetReward(-0.05f);
     }
 
     public override float[] Heuristic()
     {
         return new float[] { Input.GetAxis("Horizontal"), Input.GetAxis("Vertical") };
+    }
+
+    private float Normalize(float value, float min, float max)
+    {
+        return (value - min) / (max - min);
     }
 }
