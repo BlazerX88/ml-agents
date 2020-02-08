@@ -1,4 +1,4 @@
-﻿using MLAgents;
+using MLAgents;
 using UnityEngine;
 
 public class RollerAgent : Agent
@@ -6,6 +6,7 @@ public class RollerAgent : Agent
     // Start is called before the first frame update
     const float FixedY = 0.5f;
     [SerializeField] float speed = 10f;
+    [SerializeField] Transform floor = null;
     [SerializeField] Transform target = null;
     private new Rigidbody rigidbody;
 
@@ -60,6 +61,8 @@ public class RollerAgent : Agent
             Done();
         }
 
+        Monitor.Log("Reward", GetReward(), floor);
+        Monitor.Log("Cumulative Reward", GetCumulativeReward());
         // SetReward(-0.05f);
     }
 

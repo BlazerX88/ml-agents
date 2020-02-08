@@ -99,6 +99,7 @@ MonoBehaviour:
     onDemandDecision: 0
     numberOfActionsBetweenDecisions: 10
   speed: 10
+  floor: {fileID: 4285431749748771952}
   target: {fileID: 4285431749720864521}
 --- !u!114 &4285431749689406797
 MonoBehaviour:
