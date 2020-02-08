@@ -1,22 +1,22 @@
 default:
     trainer: sac
-    batch_size: 128
-    buffer_size: 50000
-    buffer_init_steps: 0
+    batch_size: 1024 # 128 # 1024 # 128
+    buffer_size: 1000000 # 50000 # 1000000 # 50000
+    buffer_init_steps: 10000 # 1000 # 10000 # 0
     hidden_units: 128
-    init_entcoef: 1.0
-    learning_rate: 3.0e-4
+    init_entcoef: 0.5 # 1.0
+    learning_rate: 1e-5 # 3.0e-4 # 1e-5 # 3.0e-4
     learning_rate_schedule: constant
-    max_steps: 5.0e4
+    max_steps: 1e5 # 5.0e4
     memory_size: 256
-    normalize: false
+    normalize: false # true # false # true # false
     num_update: 1
-    train_interval: 1
+    train_interval: 3 # 1 # 3 # 1
     num_layers: 2
     time_horizon: 64
     sequence_length: 64
     summary_freq: 1000
-    tau: 0.005
+    tau: 0.01 # 0.005 # 0.01 # 0.005
     use_recurrent: false
     vis_encode_type: simple
     reward_signals:

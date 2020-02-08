@@ -1,4 +1,4 @@
-using MLAgents;
+﻿using MLAgents;
 using UnityEngine;
 
 public class RollerAgent : Agent
@@ -40,10 +40,14 @@ public class RollerAgent : Agent
     public override void AgentAction(float[] vectorAction)
     {
         var controlSignal = new Vector3(vectorAction[0], 0f, vectorAction[1]); // 1 + 1
-        print(controlSignal);
+        if ((controlSignal.x > 1f) || (controlSignal.z > 1f))
+        {
+            print("abnormal");
+        }
         // = 2 vector actions
         rigidbody.AddForce(controlSignal * speed);
 
+        Monitor.Log("Control Signal", vectorAction, floor);
         float distanceToTarget = Vector3.Distance(this.transform.localPosition, target.localPosition);
 
         // Reached target
